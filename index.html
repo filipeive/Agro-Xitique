@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroXitique — Simulador USSD | Mini Finckathon 2025</title>
+    <meta name="description"
+        content="AgroXitique: Sistema de poupança colectiva e microcrédito agrícola via USSD/M-Pesa para comunidades rurais de Moçambique. Mini Finckathon 2025 — UniLicungo.">
+    <meta name="author" content="Filipe Domingos dos Santos — LicungoLab — UniLicungo">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-shell">
+        <!-- TITLE BAR -->
+        <header class="title-bar">
+            <div class="brand-line">
+                <img src="assets/up.png" alt="UniLicungo" class="uni-logo">
+                <div class="logo-divider"></div>
+                <div class="logo-container">
+                    <img src="assets/agroxitique_logo.png" alt="AgroXitique Logo" class="app-logo">
+                    <div class="logo-text">
+                        <h1>AgroXitique</h1>
+                        <p>Inovação em Micro-finanças Rurais</p>
+                    </div>
+                </div>
+            </div>
+            <p class="subtitle-author">Projecto Académico · Programação Funcional · Mini Finckathon 2025</p>
+        </header>
+
+        <div class="layout">
+            <!-- ═══ PHONE ═══ -->
+            <div class="phone-wrap">
+                <div class="phone">
+                    <div class="phone-notch"></div>
+                    <div class="phone-status">
+                        <span id="phone-time">09:42</span>
+                        <div style="display:flex; align-items:center; gap:4px">
+                            <span class="material-icons" style="font-size:14px">signal_cellular_alt</span>
+                            <span style="font-size:12px">Vodacom MZ</span>
+                            <span class="material-icons" style="font-size:14px">battery_full</span>
+                        </div>
+                    </div>
+                    <div class="screen" id="screen">
+                        <div class="screen-title" id="screen-title">Vodacom M-Pesa</div>
+                        <div class="screen-meta">
+                            <div class="screen-chip" id="session-chip">Pronto para marcar *150#</div>
+                            <div class="screen-chip secondary" id="journey-chip">Passo 0 de 0</div>
+                        </div>
+                        <div class="screen-body" id="screen-body">
+                            <span class="muted">Utilize o teclado abaixo para iniciar a sessão.</span>
+                        </div>
+                    </div>
+                    <div class="input-area" id="input-area" style="display:none">
+                        <input class="input-field" id="user-input" type="text" placeholder="" maxlength="20"
+                            autocomplete="off" />
+                        <div class="btn-group">
+                            <button class="btn-cancel" id="input-secondary-btn"
+                                onclick="AgroSimulator.secondaryAction()">Limpar</button>
+                            <button class="btn-send" id="input-primary-btn"
+                                onclick="AgroSimulator.primaryAction()">Discar</button>
+                        </div>
+                    </div>
+
+                    <!-- Redesigned Authentic Keypad -->
+                    <div id="dial-btn" class="dialer-container">
+                        <div class="keypad-grid">
+                            <button class="key" onclick="AgroSimulator.appendDial('1')"><span
+                                    class="key-num">1</span></button>
+                            <button class="key" onclick="AgroSimulator.appendDial('2')"><span
+                                    class="key-num">2</span><span class="key-alpha">ABC</span></button>
+                            <button class="key" onclick="AgroSimulator.appendDial('3')"><span
+                                    class="key-num">3</span><span class="key-alpha">DEF</span></button>
+                            <button class="key" onclick="AgroSimulator.appendDial('4')"><span
+                                    class="key-num">4</span><span class="key-alpha">GHI</span></button>
+                            <button class="key" onclick="AgroSimulator.appendDial('5')"><span
+                                    class="key-num">5</span><span class="key-alpha">JKL</span></button>
+                            <button class="key" onclick="AgroSimulator.appendDial('6')"><span
+                                    class="key-num">6</span><span class="key-alpha">MNO</span></button>
+                            <button class="key" onclick="AgroSimulator.appendDial('7')"><span
+                                    class="key-num">7</span><span class="key-alpha">PQRS</span></button>
+                            <button class="key" onclick="AgroSimulator.appendDial('8')"><span
+                                    class="key-num">8</span><span class="key-alpha">TUV</span></button>
+                            <button class="key" onclick="AgroSimulator.appendDial('9')"><span
+                                    class="key-num">9</span><span class="key-alpha">WXYZ</span></button>
+                            <button class="key" onclick="AgroSimulator.appendDial('*')"><span
+                                    class="key-num">*</span></button>
+                            <button class="key" onclick="AgroSimulator.appendDial('0')"><span
+                                    class="key-num">0</span><span class="key-alpha">+</span></button>
+                            <button class="key" onclick="AgroSimulator.appendDial('#')"><span
+                                    class="key-num">#</span></button>
+                        </div>
+
+                        <div class="dialer-footer" style="margin-top: 10px !important;">
+                            <button class="btn-quick-access" onclick="AgroSimulator.quickDial()" title="Acesso Direto">
+                                <span class="material-icons" style="font-size: 20px;">bolt</span>
+                            </button>
+                            <button class="btn-call-main" onclick="AgroSimulator.startSession()">
+                                <div class="call-icon">
+                                    <span class="material-icons" style="font-size: 32px; color: aquamarine;">call</span>
+                                </div>
+                            </button>
+                            <button class="btn-backspace" onclick="AgroSimulator.clearDial()" title="Limpar">
+                                <span class="material-icons" style="font-size: 20px;">backspace</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mpesa-signature">
+                        <img src="assets/MPESA.png" alt="M-Pesa">
+                        <span>Powered by M-Pesa</span>
+                    </div>
+                </div>
+                <div class="phone-footer">
+                    Simulação inspirada nas páginas oficiais da Vodacom M-Pesa Moçambique. Na vida real, funciona em
+                    qualquer telemóvel sem internet.<br>
+                    <span class="tag">Haskell</span><span class="tag">M-Pesa</span><span class="tag">USSD</span><span
+                        class="tag">UniLicungo</span>
+                </div>
+                <div class="simulator-hints">
+                    <div class="hint-card">
+                        <span class="hint-kicker">Começar</span>
+                        <strong>Marque *150# e entre no menu M-Pesa.</strong>
+                        <p>O fluxo realista abre o Xitique M-Pesa antes de chegar ao AgroXitique.</p>
+                    </div>
+                    <div class="hint-card">
+                        <span class="hint-kicker">Base real</span>
+                        <strong>Xitique, Pagamentos e Minha Conta seguem a pesquisa oficial.</strong>
+                        <p>Contribuição, crédito e gestão colectiva são a camada própria do teu projecto.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ SIDE PANEL ═══ -->
+            <div class="panel">
+                <div class="impact-banner">
+                    <span>Raízes Digitais, Colheitas Reais</span>
+                </div>
+                <!-- Tabs -->
+                <div class="panel-tabs">
+                    <button class="panel-tab active" data-tab="dados">
+                        <span class="material-icons">storage</span> Dados
+                    </button>
+                    <button class="panel-tab" data-tab="analytics">
+                        <span class="material-icons">bar_chart</span> Analytics
+                    </button>
+                    <button class="panel-tab" data-tab="haskell">
+                        <span class="material-icons">functions</span> Haskell
+                    </button>
+                </div>
+
+                <!-- TAB 1: Dados do Círculo -->
+                <div class="panel-content active" id="tab-dados">
+                    <h2><span class="material-icons" style="vertical-align:bottom; margin-right:8px">groups</span>Dados do Círculo <span class="badge">DEMO</span></h2>
+
+                    <div class="overview-grid">
+                        <div class="overview-card">
+                            <span class="overview-label">Sessão actual</span>
+                            <strong id="panel-session-state">À espera de marcação</strong>
+                            <p id="panel-session-detail">Use *150# para abrir o menu principal M-Pesa.</p>
+                        </div>
+                        <div class="overview-card">
+                            <span class="overview-label">Próxima acção</span>
+                            <strong id="panel-next-step">Abrir menu M-Pesa</strong>
+                            <p id="panel-next-detail">O teclado replica a experiência de um telemóvel básico num fluxo
+                                próximo do real.</p>
+                        </div>
+                    </div>
+
+                    <div class="kv"><span class="k">Círculo</span><span class="v gold">Machamba Unida</span></div>
+                    <div class="kv"><span class="k">Distrito</span><span class="v">Quelimane, Zambézia</span></div>
+                    <div class="kv"><span class="k">Membros</span><span class="v" id="members-count">8 / 15</span></div>
+                    <div class="kv"><span class="k">Poupança Total</span><span class="v green" id="savings-val">12.400
+                            MT</span></div>
+                    <div class="kv"><span class="k">Meta (Set)</span><span class="v">18.000 MT</span></div>
+                    <div class="kv"><span class="k">Crédito Disponível</span><span class="v gold" id="credit-val">8.000
+                            MT</span></div>
+
+                    <div class="score-bar-wrap">
+                        <div class="score-label">Score de Crédito do Grupo — <strong id="score-val"
+                                style="color:var(--green-500)">72/100</strong></div>
+                        <div class="score-bar">
+                            <div class="score-fill" id="score-fill" style="width:72%"></div>
+                        </div>
+                        <div class="score-range">
+                            <span>0</span>
+                            <span class="score-status">▲ Bom</span>
+                            <span>100</span>
+                        </div>
+                    </div>
+
+                    <!-- Scenario Simulation Buttons for Judges -->
+                    <div class="scenario-block">
+                        <p class="scenario-title"><span class="material-icons" style="font-size:16px; vertical-align:middle; margin-right:4px">play_circle</span>Demonstração para o júri</p>
+                        <div class="scenario-grid">
+                            <button class="btn-scenario accent" onclick="AgroSimulator.simulateNewMember()">Novo
+                                Membro</button>
+                            <button class="btn-scenario" onclick="AgroSimulator.simulateMassSavings()">Poupança em
+                                Massa</button>
+                        </div>
+                    </div>
+
+                    <div id="risk-indicator" class="risk-indicator"></div>
+
+                    <div class="members">
+                        <div class="members-header"><span class="material-icons" style="font-size:16px; vertical-align:middle; margin-right:4px">person</span>Membros — estado deste mês:</div>
+                        <div id="members-list"></div>
+                    </div>
+
+                    <div class="history">
+                        <div class="history-header"><span class="material-icons" style="font-size:16px; vertical-align:middle; margin-right:4px">history</span>Últimas transacções:</div>
+                        <div id="history-list"></div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: Analytics -->
+                <div class="panel-content" id="tab-analytics">
+                    <h2><span class="material-icons" style="vertical-align:bottom; margin-right:8px">trending_up</span>Analytics <span class="badge">LIVE</span></h2>
+
+                    <div class="chart-container">
+                        <div class="chart-title"><span class="material-icons" style="font-size:16px; vertical-align:middle; margin-right:6px">account_balance_wallet</span>Poupança Acumulada (MT)</div>
+                        <div class="mini-bar-chart" id="savings-chart"></div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-title"><span class="material-icons" style="font-size:16px; vertical-align:middle; margin-right:6px">insights</span>Evolução do Score</div>
+                        <div class="mini-bar-chart" id="score-chart"></div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-title"><span class="material-icons" style="font-size:16px; vertical-align:middle; margin-right:6px">event_note</span>Calendário Agrícola</div>
+                        <div style="font-size:12px;color:var(--gray-400);line-height:1.8">
+                            <div style="display:flex; align-items:center; gap:8px"><span class="material-icons" style="font-size:16px; color:var(--green-400)">grass</span> <strong style="color:var(--green-400)">Out–Dez</strong> — Época de plantio</div>
+                            <div style="display:flex; align-items:center; gap:8px"><span class="material-icons" style="font-size:16px; color:var(--green-300)">nature</span> <strong style="color:var(--green-300)">Jan–Mar</strong> — Crescimento</div>
+                            <div style="display:flex; align-items:center; gap:8px"><span class="material-icons" style="font-size:16px; color:var(--gold-500)">agriculture</span> <strong style="color:var(--gold-500)">Abr–Jun</strong> — Colheita</div>
+                            <div style="display:flex; align-items:center; gap:8px"><span class="material-icons" style="font-size:16px; color:var(--gray-400)">settings</span> <strong style="color:var(--gray-400)">Jul–Set</strong> — Preparação</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: Haskell -->
+                <div class="panel-content" id="tab-haskell">
+                    <h2><span class="material-icons" style="vertical-align:bottom; margin-right:8px">terminal</span>Motor Haskell <span class="badge">GHCi</span></h2>
+
+                    <p style="font-size:12px;color:var(--gray-400);margin-bottom:14px;line-height:1.6">
+                        O score de crédito é calculado com <strong style="color:var(--green-400)">Programação
+                            Funcional</strong> — funções puras garantem resultados reproduzíveis e auditáveis.
+                    </p>
+
+                    <div class="haskell-code">
+                        <span class="hs-comment">-- Tipos algébricos do domínio</span>
+                        <span class="hs-keyword">data</span> <span class="hs-type">Contribuicao</span> = <span
+                            class="hs-type">Contribuicao</span>
+                        { <span class="hs-func">valor</span> <span class="hs-operator">::</span> <span
+                            class="hs-type">Double</span>
+                        , <span class="hs-func">emDia</span> <span class="hs-operator">::</span> <span
+                            class="hs-type">Bool</span>
+                        } <span class="hs-keyword">deriving</span> (<span class="hs-type">Show</span>)
+                    </div>
+
+                    <div class="haskell-code">
+                        <span class="hs-comment">-- Função pura de scoring</span>
+                        <span class="hs-func">calcularScore</span> <span class="hs-operator">::</span> [<span
+                            class="hs-type">Contribuicao</span>] <span class="hs-operator">-></span> <span
+                            class="hs-type">Int</span> <span class="hs-operator">-></span> <span
+                            class="hs-type">Int</span>
+                        <span class="hs-func">calcularScore</span> cs tam <span class="hs-operator">=</span>
+                        <span class="hs-keyword">let</span> pont <span class="hs-operator">=</span> <span
+                            class="hs-func">length</span> (<span class="hs-func">filter</span> emDia cs) <span
+                            class="hs-operator">*</span> <span class="hs-number">10</span>
+                        bonus <span class="hs-operator">=</span> <span class="hs-keyword">if</span> tam <span
+                            class="hs-operator">>=</span> <span class="hs-number">10</span> <span
+                            class="hs-keyword">then</span> <span class="hs-number">20</span> <span
+                            class="hs-keyword">else</span> <span class="hs-number">0</span>
+                        <span class="hs-keyword">in</span> <span class="hs-func">min</span> <span
+                            class="hs-number">100</span> (pont <span class="hs-operator">+</span> bonus)
+                    </div>
+
+                    <div class="haskell-code">
+                        <span class="hs-comment">-- Teste no GHCi:</span>
+                        <span class="hs-operator">></span> <span class="hs-func">calcularScore</span> [<span
+                            class="hs-type">Contribuicao</span> <span class="hs-number">200</span> <span
+                            class="hs-type">True</span>,
+                        <span class="hs-type">Contribuicao</span> <span class="hs-number">200</span> <span
+                            class="hs-type">True</span>,
+                        <span class="hs-type">Contribuicao</span> <span class="hs-number">200</span> <span
+                            class="hs-type">False</span>] <span class="hs-number">8</span>
+                        <span class="hs-number">20</span> <span class="hs-comment">-- 2 pontuais × 10 = 20</span>
+                    </div>
+
+                    <p style="font-size:11px;color:var(--gray-500);margin-top:12px;line-height:1.5">
+                        💡 O código Haskell completo está na pasta <code style="color:var(--green-400)">haskell/</code>
+                        e pode ser executado no GHCi.<br>
+                        Cadeira de Programação Funcional — UniLicungo 2025
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts (ordem importa: data → scoring → screens → analytics → simulator) -->
+    <script src="js/data.js"></script>
+    <script src="js/scoring.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/screens.js"></script>
+    <script src="js/simulator.js"></script>
+    <script>
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            AgroAnalytics.initTabs();
+            AgroAnalytics.renderPanel();
+            AgroSimulator.init();
+        });
+    </script>
+</body>
+
+</html>
