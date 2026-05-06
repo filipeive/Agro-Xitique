@@ -16,6 +16,19 @@ Para uma apresentação de impacto, siga este caminho no simulador:
 4.  **Gestão**: Explore o Dashboard em tempo real, veja o Score de Crédito e simule uma contribuição.
 5.  **Onboarding**: Simule a criação de um novo círculo para ver a geração dinâmica de IDs e notificações SMS.
 
+## 📸 Galeria do Simulador
+<p align="center">
+  <img src="assets/screenshots/01_idle_state.png" width="45%" alt="Idle State" />
+  <img src="assets/screenshots/02_mpesa_menu.png" width="45%" alt="M-Pesa Menu" />
+</p>
+<p align="center">
+  <img src="assets/screenshots/03_dashboard.png" width="45%" alt="AgroXitique Dashboard" />
+  <img src="assets/screenshots/04_analytics.png" width="45%" alt="Analytics Panel" />
+</p>
+<p align="center">
+  <img src="assets/screenshots/05_haskell_logic.png" width="91%" alt="Haskell Logic" />
+</p>
+
 ## 🛠️ Arquitetura e Tecnologia (Para Estudantes de FP)
 Este sistema foi construído sob os princípios da **Programação Funcional**, garantindo robustez e escalabilidade:
 
